@@ -195,17 +195,77 @@
 #         break
 
 
+#정답코드
+# import sys
+# read = sys.stdin.readline
+
+# word1, word2 = read().strip(), read().strip()
+# h, w = len(word1), len(word2)
+# cache = [[0] * (w+1) for _ in range(h+1)]
+
+# for i in range(1, h+1):
+#     for j in range(1, w+1):
+#         if word1[i-1] == word2[j-1]:
+#             cache[i][j] = cache[i-1][j-1] + 1
+#         else:
+#             cache[i][j] = max(cache[i][j-1], cache[i-1][j])
+# print(cache[-1][-1])
+
+
+# #12865
+# import sys
+# input = sys.stdin.readline
+
+
+# # 가방싸기 함수
+# def knapsack(N,K,items):
+#     dp = [[0]*(K+1) for _ in range(N+1)]
+
+#     # 가방에 담을 수 있는 물건의 개수를 1개부터 하나씩 늘려 나간다
+#     for i in range(1,N+1): # i: item
+#         weight, value = map(int, items[i-1])
+#         # 가방에 담을 수 있는 최대 무게를 1부터 차례대로 증가시켜 나가면서
+#         for j in range(1,K+1): # j:가방에 담을 수 있는 무게
+#             # 현재 물건이 가방이 담을 수 있는 무게보다 작으면
+#             if weight <= j:
+#                 # 현재 물건을 넣지 않았을 때와 현재 물건을 넣었을 때의 가치를 비교한다.
+#                 dp[i][j] = max(dp[i-1][j],dp[i-1][j-weight]+value)
+#             # 크면 이 물건을 담지 않고 이전 물건까지 담았을 때 가방에 담을 수 있는 최고 가치를 저장
+#             else:
+#                 dp[i][j] = dp[i-1][j]
+
+#     # 가방에 담을 수 있는 최대 무게에서 모든 물건을 고려했을 때의 최대값을 출력
+#     print(dp[N][K])
+
+
+
+# # N: 물건 개수 K:가방에 담을 수 있는 최대 무게
+# N, K = map(int, input().split())
+# # 각 물건의 무게와 가치
+# items = [list(map(int, input().split())) for _ in range(N)] 
+# # 주어진 조건으로 가방싸기!
+# knapsack(N,K,items)
+
+
+#11049
 import sys
-read = sys.stdin.readline
+input = sys.stdin.readline
 
-word1, word2 = read().strip(), read().strip()
-h, w = len(word1), len(word2)
-cache = [[0] * (w+1) for _ in range(h+1)]
+N = int(input())
+matrix = [list(map(int, input().split())) for _ in range(N)]
+DP = [[0]*N for _ in range(N)]
 
-for i in range(1, h+1):
-    for j in range(1, w+1):
-        if word1[i-1] == word2[j-1]:
-            cache[i][j] = cache[i-1][j-1] + 1
-        else:
-            cache[i][j] = max(cache[i][j-1], cache[i-1][j])
-print(cache[-1][-1])
+# 분할된 그룹의 크기를 1부터 N-1까지 돎
+for size in range(1, N):
+	# 크기 size인 그룹의 모든 경우의 수 돎
+    for start in range(N - size):
+        end = start + size
+        
+        # 어떤 그룹의 최소 곱셈 횟수는 분할한 두 그룹의 최소 곱셈 횟수 + 각 그룹의 곱셈 다 끝나고 남은 행렬끼리의 곱셈 횟수
+        result = float("inf")
+        for cut in range(start, end):
+            result = min(result, DP[start][cut] + DP[cut+1][end] +
+                        matrix[start][0]*matrix[cut][1]*matrix[end][1])
+        DP[start][end] = result
+
+print(DP[0][-1])
