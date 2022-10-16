@@ -169,7 +169,6 @@
 
 
 #9251
-#7:50
 # #시간초과
 # from itertools import combinations
 # import sys
@@ -247,25 +246,130 @@
 # knapsack(N,K,items)
 
 
-#11049
-import sys
-input = sys.stdin.readline
+# #11049
+# #pypy로만 통과
+# import sys
+# input = sys.stdin.readline
 
-N = int(input())
-matrix = [list(map(int, input().split())) for _ in range(N)]
-DP = [[0]*N for _ in range(N)]
+# N = int(input())
+# matrix = [list(map(int, input().split())) for _ in range(N)]
+# DP = [[0]*N for _ in range(N)]
 
-# 분할된 그룹의 크기를 1부터 N-1까지 돎
-for size in range(1, N):
-	# 크기 size인 그룹의 모든 경우의 수 돎
-    for start in range(N - size):
-        end = start + size
+# # 분할된 그룹의 크기를 1부터 N-1까지 돎
+# for size in range(1, N):
+# 	# 크기 size인 그룹의 모든 경우의 수 돎
+#     for start in range(N - size):
+#         end = start + size
         
-        # 어떤 그룹의 최소 곱셈 횟수는 분할한 두 그룹의 최소 곱셈 횟수 + 각 그룹의 곱셈 다 끝나고 남은 행렬끼리의 곱셈 횟수
-        result = float("inf")
-        for cut in range(start, end):
-            result = min(result, DP[start][cut] + DP[cut+1][end] +
-                        matrix[start][0]*matrix[cut][1]*matrix[end][1])
-        DP[start][end] = result
+#         # 어떤 그룹의 최소 곱셈 횟수는 분할한 두 그룹의 최소 곱셈 횟수 + 각 그룹의 곱셈 다 끝나고 남은 행렬끼리의 곱셈 횟수
+#         result = float("inf")
+#         for cut in range(start, end):
+#             result = min(result, DP[start][cut] + DP[cut+1][end] +
+#                         matrix[start][0]*matrix[cut][1]*matrix[end][1])
+#         DP[start][end] = result
 
-print(DP[0][-1])
+# print(DP[0][-1])
+
+
+# #11053
+# N = int(input())
+# A = [0] + list(map(int, input().split()))
+# dp = [0]*(N+1)
+# #dp에 dp[n]이 마지막 요소로 있는 가장 긴 수열의 길이를 저장해 줄 것임.
+ 
+# for i in range(1, N+1):
+#     for j in range(1, N+1):
+#         #나보다 작은 요소를 발견하면
+#         #그 뒤에 나를 얹어줄 것임
+#         if A[i]>A[j] and dp[i]<dp[j]:
+#             #그 마지막 요소가 있는 수열의 길이를 복사해오고
+#             dp[i] = dp[j]
+#     #나를 얹어준다.
+#     dp[i] += 1
+
+# print(max(dp))
+
+
+#11047
+# N, K = map(int, input().split())
+# coins = list(int(input()) for _ in range(N))
+# coins.reverse()
+
+# ans = 0
+# for coin in coins:
+#     ans += K // coin
+#     K %= coin
+# print(ans)
+
+
+# #for문을 뒤로 돌린 코드
+# N, K = map(int, input().split())
+# coins = list(int(input()) for _ in range(N))
+
+# ans = 0
+# for i in range(N-1, -1, -1):
+#     ans += K // coins[i]
+#     K %= coins[i]
+# print(ans)
+
+
+#1541
+# s = input().split('-')
+
+# sum = 0
+# for i in s[0].split('+'):
+#     sum += int(i)
+
+# for i in s[1:]:
+#     for j in i.split('+'):
+#         sum -= int(j)
+
+# print(sum)
+
+
+# #1931
+# #활동 선택 문제
+# import sys
+# input = sys.stdin.readline
+# N = int(input())
+# m = []
+# for _ in range(N):
+#     start, end = map(int, input().split())
+#     m.append((end, start))
+
+# m.sort()
+
+# res = 0
+# # tmp = []
+# time = 0
+# for end, start in m:
+    
+#     if time <= start:
+#         res += 1
+#         # tmp.append((start, end))
+#         time = end
+
+# # print(tmp)
+# print(res)
+
+
+
+# #1946
+# import sys
+# input = sys.stdin.readline
+# T = int(input())
+# for _ in range(T):
+#     N = int(input())
+#     scores = [list(tuple(map(int, input().split()))) for _ in range(N)]
+#     scores.sort()
+
+#     top = 0
+#     result = 1
+
+#     for i in range(1, N):
+#         if scores[i][1] < scores[top][1]:
+#             top = i
+#             result += 1
+
+#     print(result)
+
