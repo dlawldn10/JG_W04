@@ -373,3 +373,98 @@
 
 #     print(result)
 
+
+# #1700
+# N, K = map(int, input().split())
+# order = list(map(int, input().split()))
+
+# multi = [0] * N
+# count = 0
+# scheduling_idx = 0
+# tmp = 0
+# tmp_i = 0
+
+# for i in order:
+#     # 멀티탭에 같은 전기용품이 있을 때
+#     if i in multi:
+#         pass
+#     # 멀티탭이 아직 채워지지 않았을 때
+#     elif 0 in multi:
+#         multi[multi.index(0)] = i
+#     # 멀티탭에 빈자리 없고 현재 꽂혀 있는 전기용품들과 다를 때
+#     else:
+#         for j in multi:
+#             # 현재 꽂혀있는 전기용품이 더 이상 사용되지 않는다면
+#             if j not in order[scheduling_idx:]:
+#                 tmp = j
+#                 break
+#             #현재 꽂혀있는 전기용품이 이후에도 사용될 때
+#             elif order[scheduling_idx:].index(j) > tmp_i:  # 꽂혀있는 것들 중 여러 개가 다시 사용될 때, 더 나중에 사용되는 것을 뽑는다.
+#                 tmp = j
+#                 tmp_i = order[scheduling_idx:].index(j)
+#         multi[multi.index(tmp)] = i
+#         tmp = tmp_i = 0
+#         count += 1
+#     scheduling_idx += 1
+
+# print(count)
+
+
+# #2098
+# n = int(input())
+
+# INF = int(1e9)
+# dp = [[INF] * (1 << n) for _ in range(n)]
+
+# def dfs(x, visited):
+#     if visited == (1 << n) - 1:     # 모든 도시를 방문했다면
+#         if graph[x][0]:             # 출발점으로 가는 경로가 있을 때
+#             return graph[x][0]
+#         else:                       # 출발점으로 가는 경로가 없을 때
+#             return INF
+
+#     if dp[x][visited] != INF:       # 이미 최소비용이 계산되어 있다면
+#         return dp[x][visited]
+
+#     for i in range(1, n):           # 모든 도시를 탐방
+#         if not graph[x][i]:         # 가는 경로가 없다면 skip
+#             continue
+#         if visited & (1 << i):      # 이미 방문한 도시라면 skip
+#             continue
+
+#         # 점화식 부분(위 설명 참고)
+#         dp[x][visited] = min(dp[x][visited], dfs(i, visited | (1 << i)) + graph[x][i])
+#     return dp[x][visited]
+
+
+# graph = []
+# for i in range(n):
+#     graph.append(list(map(int, input().split())))
+
+# print(dfs(0, 1))
+
+
+#2253
+from sys import stdin
+
+N, stone_n = map(int, stdin.readline().split())
+
+stone = set()
+for _ in range(stone_n):
+    stone.add(int(stdin.readline().rstrip()))
+
+dp  = [[10001]* (int((2*N)**0.5)+2)  for _ in range(N+1)]
+
+dp[1][0] = 0
+for i in range(2, N+1):
+    if i in stone:
+        continue
+    for v in range(1,int((2*i)**0.5)+1):
+        dp[i][v] = min(dp[i-v][v-1],dp[i-v][v],dp[i-v][v+1]) +1
+
+
+ans = min(dp[N])
+if ans == 10001:
+    print(-1)
+else:
+    print(ans)
