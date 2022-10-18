@@ -211,7 +211,7 @@
 # print(cache[-1][-1])
 
 
-# #12865
+# # #12865
 # import sys
 # input = sys.stdin.readline
 
@@ -246,7 +246,7 @@
 # knapsack(N,K,items)
 
 
-# #11049
+#11049
 # #pypy로만 통과
 # import sys
 # input = sys.stdin.readline
@@ -264,11 +264,11 @@
 #         # 어떤 그룹의 최소 곱셈 횟수는 분할한 두 그룹의 최소 곱셈 횟수 + 각 그룹의 곱셈 다 끝나고 남은 행렬끼리의 곱셈 횟수
 #         result = float("inf")
 #         for cut in range(start, end):
-#             result = min(result, DP[start][cut] + DP[cut+1][end] +
-#                         matrix[start][0]*matrix[cut][1]*matrix[end][1])
+#             result = min(result, DP[start][cut] + DP[cut+1][end] + matrix[start][0]*matrix[cut][1]*matrix[end][1])
 #         DP[start][end] = result
 
 # print(DP[0][-1])
+
 
 
 # #11053
@@ -444,27 +444,27 @@
 # print(dfs(0, 1))
 
 
-#2253
-from sys import stdin
+# #2253
+# from sys import stdin
 
-N, stone_n = map(int, stdin.readline().split())
+# N, stone_n = map(int, stdin.readline().split())
 
-stone = set()
-for _ in range(stone_n):
-    stone.add(int(stdin.readline().rstrip()))
+# stone = set()
+# for _ in range(stone_n):
+#     stone.add(int(stdin.readline().rstrip()))
 
-dp  = [[10001]* (int((2*N)**0.5)+2)  for _ in range(N+1)]
+# dp  = [[10001]* (int((2*N)**0.5)+2)  for _ in range(N+1)]
 
-dp[1][0] = 0
-for i in range(2, N+1):
-    if i in stone:
-        continue
-    for v in range(1,int((2*i)**0.5)+1):
-        dp[i][v] = min(dp[i-v][v-1],dp[i-v][v],dp[i-v][v+1]) +1
+# dp[1][0] = 0
+# for i in range(2, N+1):
+#     if i in stone:
+#         continue
+#     for v in range(1,int((2*i)**0.5)+1):
+#         dp[i][v] = min(dp[i-v][v-1],dp[i-v][v],dp[i-v][v+1]) +1
 
 
-ans = min(dp[N])
-if ans == 10001:
-    print(-1)
-else:
-    print(ans)
+# ans = min(dp[N])
+# if ans == 10001:
+#     print(-1)
+# else:
+#     print(ans)
