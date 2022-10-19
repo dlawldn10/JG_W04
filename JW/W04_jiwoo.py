@@ -255,13 +255,10 @@
 # matrix = [list(map(int, input().split())) for _ in range(N)]
 # DP = [[0]*N for _ in range(N)]
 
-# # 분할된 그룹의 크기를 1부터 N-1까지 돎
 # for size in range(1, N):
-# 	# 크기 size인 그룹의 모든 경우의 수 돎
 #     for start in range(N - size):
 #         end = start + size
-        
-#         # 어떤 그룹의 최소 곱셈 횟수는 분할한 두 그룹의 최소 곱셈 횟수 + 각 그룹의 곱셈 다 끝나고 남은 행렬끼리의 곱셈 횟수
+    
 #         result = float("inf")
 #         for cut in range(start, end):
 #             result = min(result, DP[start][cut] + DP[cut+1][end] + matrix[start][0]*matrix[cut][1]*matrix[end][1])
@@ -468,3 +465,150 @@
 #     print(-1)
 # else:
 #     print(ans)
+
+
+#################
+##개인 Practice##
+#################
+
+
+# #11726
+# #1:35
+# #2:01
+# n = int(input())
+
+# dp = [0]*(n+2)
+# dp[1] = 1
+# dp[2] = 2
+# for i in range(3, n+2):
+#     dp[i] = (dp[i-1] + dp[i-2])%10007
+
+# print(dp[n])
+
+
+# #9465
+# for _ in range(int(input())):
+#     n = int(input())
+#     dp = [list(map(int, input().split())) for _ in range(2)]
+#     # print(dp)
+
+#     for j in range(1, n):
+#         if j == 1:
+#             dp[0][j] += dp[1][j-1]
+#             dp[1][j] += dp[0][j-1]
+#         else:
+#             dp[0][j] += max(dp[1][j-1], dp[1][j-2])
+#             dp[1][j] += max(dp[0][j-1], dp[0][j-2])
+
+#     print(max(dp[0][n-1], dp[1][n-1]))
+
+
+# #2343
+# N, M = map(int, input().split())
+# lessons = list(map(int, input().split()))
+# l = max(lessons)
+# r = sum(lessons)
+# m = (l+r)//2
+# ans = r
+
+# def is_possible(sz):
+#     cnt = 1
+#     bluray = 0
+#     for lesson in lessons:
+#         if bluray + lesson <= sz:
+#             bluray += lesson
+#         else:
+#             cnt += 1
+#             bluray = lesson
+    
+#     return cnt <= M
+
+# while l <= r:
+#     if is_possible(m):
+#         ans = m
+#         r = m-1
+#     else:
+#         l = m+1
+
+#     m = (l+r)//2
+
+# print(ans)
+
+
+# #1699
+# N = int(input())
+# dp = [i for i in range(N+1)]
+
+# for i in range(4, N+1):
+#     for j in range(1, i):
+#         if i < j*j:
+#             break
+
+#         if dp[i] > dp[i-j*j] +1:
+#             dp[i] = dp[i-j*j] + 1
+
+# print(dp[N])
+
+
+# #10844
+# import sys
+# input = sys.stdin.readline
+
+# N = int(input())
+# div = 10**9
+# dp = [0, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+
+# pre = 0
+# if N == 1:
+#     print(sum(dp))
+# else:
+#     for i in range(N-1):
+#         for j in range(10):
+#             if j == 0:
+#                 pre = dp[0]
+#                 dp[0] = dp[1]%div
+#             elif j == 9:
+#                 dp[9] = pre%div
+#             else:
+#                 tmp = dp[j]
+#                 dp[j] = (pre + dp[j+1])%div
+#                 pre = tmp
+                
+#     print(sum(dp)%div)
+
+
+# #10942
+# import sys
+# input = sys.stdin.readline
+
+# n = int(input())
+# numbers = list(map(int, input().split()))
+# m = int(input())
+
+# #dp
+# dp = [[0] * n for _ in range(n)]
+
+
+# for num_len in range(n):
+#     for start in range(n - num_len):
+#         end = start + num_len
+        
+#         if start == end:
+#             dp[start][end] = 1
+#         elif numbers[start] == numbers[end]:
+            
+#             if start + 1 == end:
+#                 dp[start][end] = 1
+#             elif dp[start+1][end-1] == 1:
+#                 dp[start][end] = 1
+            
+
+# #정답출력하기
+# for question in range(m):
+#     s, e = map(int, input().split())
+#     print(dp[s-1][e-1])
+
+
+
+
+
